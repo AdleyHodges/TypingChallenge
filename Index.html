@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Typing Challenge</title>
+
+    <style>
+        body { background:#222; color:#fff; font-family:Arial; text-align:center; }
+        input { padding:10px; font-size:18px; }
+    </style>
+</head>
+
+<body>
+
+<h1>Typing Challenge</h1>
+
+<p>Type the words as they appear!</p>
+
+<p id="word"></p>
+
+<input id="inputBox" type="text" placeholder="Start typing...">
+
+<p id="score"></p>
+
+<script>
+// Programmer : Adley Hodges
+// === TODO: Step 1 ===
+// Show random words one at a time.
+var words = ["apple", "banana", "cherry", "dragonfruit", "elephant", "falcon", "grape", "hippopotamus"];
+var totalWords = 5;
+var currentWord = "";
+var wordsUsed = 0;
+var score = 0;
+var startTime = 0;
+
+function randomWord(){
+
+    var word = words[0];
+    words.push(word);
+    words.shift();
+    return word;
+
+};
+
+function askWord(word){
+    var startTime = new Date().getTime();
+    var userInput = prompt("Type this word: " + word);
+    var endTime = new Date().getTime();
+    var timeTaken = ((endTime - startTime) / 1000);
+}
+
+
+// === TODO: Step 2 ===
+// Compare user input to target word.
+// I had to use previous projects to figure out how to correctly integrate js
+//  with html for the game to work
+
+function nextWord() {
+    if (wordsUsed >= totalWords) {
+        document.getElementById("word").innerHTML = "Game Over!";
+        document.getElementById("inputBox").disabled = true;
+        return;
+    }
+    currentWord = randomWord();
+    document.getElementById("word").innerHTML = currentWord;
+    document.getElementById("inputBox").value = "";
+    startTime = new Date().getTime();
+    wordsUsed = wordsUsed + 1;
+}
+
+
+ 
+// === TODO: Step 3 ===
+// Track speed and accuracy score.
+function checkInput() {
+    var userInput = document.getElementById("inputBox").value;
+    var endTime = new Date().getTime();
+    var timeTaken = ((endTime - startTime) / 1000);
+
+    if (userInput === currentWord) {
+        score = score + 1;
+        alert("Correct! Time: " + timeTaken + " seconds");
+    } else {
+        alert("Wrong! The word was: " + currentWord + "\nTime: " + timeTaken + " seconds");
+    }
+
+    document.getElementById("score").innerHTML = "Score: " + score;
+    nextWord();
+}
+
+    nextWord();
+
+
+//I had to search up how to get integrate enter key with javascript
+document.getElementById("inputBox").onkeydown = function(event) {
+    if (event.key === "Enter") {
+        checkInput();
+    }
+}
+
+</script>
+</body>
+</html>
